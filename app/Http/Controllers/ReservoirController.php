@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reservoir;
 use Illuminate\Http\Request;
 use App\Models\Member;
+use Validator;
 
 class ReservoirController extends Controller
 {
@@ -44,12 +45,23 @@ class ReservoirController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(),
+        [
+        'reservoir_title' => ['required', 'min:3', 'max:64', 'alpha'],
+        'reservoir_area' => ['required', 'min:3', 'numeric'],
+        'reservoir_about' => ['required', 'min:3', 'max:200']
+        ]
+        );
+        if ($validator->fails()) {
+        $request->flash();
+        return redirect()->back()->withErrors($validator);
+        }
         $reservoir = new Reservoir;
         $reservoir->title = $request->reservoir_title;
         $reservoir->area = $request->reservoir_area;
         $reservoir->about = $request->reservoir_about;
         $reservoir->save();
-        return redirect()->route('reservoir.index')->with('success_message', 'Reservoir has been updated');
+        return redirect()->route('reservoir.index')->with('success_message', 'Reservoir has been created');
     }
 
     /**

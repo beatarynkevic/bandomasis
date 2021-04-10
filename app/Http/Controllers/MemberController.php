@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use App\Models\Reservoir;
 use Illuminate\Http\Request;
+use Validator;
 
 class MemberController extends Controller
 {
@@ -62,17 +63,21 @@ class MemberController extends Controller
 
         $validator = Validator::make($request->all(),
         [
-        'author_name' => ['required', 'min:3', 'max:64'],
-        'author_surname' => ['required', 'min:3', 'max:64'],
+        'member_name' => ['required', 'alpha' , 'min:3', 'max:64'],
+        'member_surname' => ['required', 'alpha', 'min:3', 'max:64'],
+        'member_live' => ['required', 'alpha', 'min:3', 'max:64'],
+        'member_experience' => ['required', 'min:3', 'max:50', 'numeric'], //registerd<=experience
+        'member_registered' => ['required', 'min:1', 'max:60', 'numeric', 'lte:member_experience'],
         ],
         [
-        'author_surname.min' => 'mano zinute'
+        // 'author_surname.min' => 'mano zinute'
         ]
         );
         if ($validator->fails()) {
         $request->flash();
         return redirect()->back()->withErrors($validator);
         }
+
         $member = new Member;
         $member->name = $request->member_name;
         $member->surname = $request->member_surname;
