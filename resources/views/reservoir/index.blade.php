@@ -16,23 +16,22 @@
                                     {{$reservoir->title}}
                                     {{$reservoir->area}}
                                 </div>
-                                {{-- <div class="list-line__reservoirs__member">
-                                    {{$reservoir->reservoirMembers->name}} {{$reservoir->reservoirMembers->surname}}
-                            </div> --}}
+    
+                            </div>
+                            <div class="list-line__buttons">
+                                <a href="{{route('reservoir.pdf', [$reservoir])}}" class="btn btn-warning">PDF</a>
+                                <a href="{{route('reservoir.edit',[$reservoir])}}" class="btn btn-info">EDIT</a>
+                                <form method="POST" action="{{route('reservoir.destroy', [$reservoir])}}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">DELETE</button>
+                                </form>
+                            </div>
+                        </li>
+                        @endforeach
+                    </ul>
                 </div>
-                <div class="list-line__buttons">
-                    <a href="{{route('reservoir.edit',[$reservoir])}}" class="btn btn-info">EDIT</a>
-                    <form method="POST" action="{{route('reservoir.destroy', [$reservoir])}}">
-                        @csrf
-                        <button type="submit" class="btn btn-danger">DELETE</button>
-                    </form>
-                </div>
-                </li>
-                @endforeach
-                </ul>
             </div>
         </div>
     </div>
-</div>
 </div>
 @endsection

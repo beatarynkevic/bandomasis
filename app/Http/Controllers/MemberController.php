@@ -126,6 +126,7 @@ class MemberController extends Controller
         $member->surname = $request->member_surname;
         $member->live = $request->member_live;
         $member->experience = $request->member_experience;
+        $member->registered = $request->member_registered;
         $member->reservoir_id = $request->reservoir_id;
 
         $member->save();

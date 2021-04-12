@@ -14,4 +14,9 @@ class Member extends Model
     {
     return $this->belongsTo(Reservoir::class, 'reservoir_id', 'id');
     }
+
+    // public function memberReservoirList()
+    // {
+    //     return $this->hasMany('App\Models\Reservoir', 'id', 'author_id');
+    // }
 }

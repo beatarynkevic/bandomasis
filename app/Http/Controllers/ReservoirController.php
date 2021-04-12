@@ -6,6 +6,7 @@ use App\Models\Reservoir;
 use Illuminate\Http\Request;
 use App\Models\Member;
 use Validator;
+use PDF;
 
 class ReservoirController extends Controller
 {
@@ -111,10 +112,16 @@ class ReservoirController extends Controller
     public function destroy(Reservoir $reservoir)
     {
         if($reservoir->reservoirMembers->count() !==0){
-            return redirect()->back()->with('info_message', 'Trinti negalima, nes turi sunkvežimių');
+            return redirect()->back()->with('info_message', 'Trinti negalima, nes turi nariu');
         }
         $reservoir->delete();
         return redirect()->route('reservoir.index')->with('success_message', 'Sekmingai ištrintas.');
+    }
+
+    public function pdf(Reservoir $reservoir)
+    {
+        $pdf = PDF::loadView('reservoir.pdf', ['reservoir' => $reservoir]); // standartinis view
+        return $pdf->download('reservoir-id' . $reservoir->id . '.pdf'); // failo pavadinimas
     }
 }
 

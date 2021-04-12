@@ -21,7 +21,7 @@
 
                         <div class="form-group">
                             <label>About</label>
-                            <textarea id="summernote" name="reservoir_mechanic_about">{{$reservoir->mechanic_about}}</textarea>
+                            <textarea id="summernote" name="reservoir_about">{{$reservoir->about}}</textarea>
                             <small class="form-text text-muted">Parasykite ka nors :) </small>
                         </div>
                         @csrf
